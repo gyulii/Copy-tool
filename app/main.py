@@ -1,0 +1,1 @@
+""" Make a window and thread handle  """
