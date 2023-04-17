@@ -1,40 +1,64 @@
 """Identify pressed key and save them."""
 from pynput import keyboard
-
+import collections
 
 
 
 class KeyRegister:
-    def __init__(self, length: int = 3) -> None:
-        self.length = length
-    
-    def set_register_keys(length: int = 3):
-        pass
-    
-    def get_register_keys():
-        pass
+    def __init__(self, default_key_list = None) -> None:
         
         
-from pynput import keyboard
+        if default_key_list is not None:
+            self.length = len(default_key_list)
+            self.saved_keys = default_key_list
+        else:
+            self.length = 4
+            self.saved_keys = []
+            
+        self.collected_input_buffer = collections.deque(maxlen=self.length) # Input detect
+    
+    def register_key(self , key : chr):
+        if len(self.saved_keys) < self.length:
+            self.saved_keys.append(key)
+            return True
+        else:
+            return False
+    
+    def get_registered_keys(self):
+        return self.saved_keys
 
-def on_press(key):
-    try:
-        print('alphanumeric key {0} pressed'.format(
-            key.char))
-    except AttributeError:
-        print('special key {0} pressed'.format(
-            key))
+    def reset_registered_keys(self):
+        self.saved_keys.clear()
+    
+    """Functions from pynput, example usage:
+    
+        KeyReg = KeyRegister()
+    listener = keyboard.Listener(
+        on_press=KeyReg.on_press,
+        on_release=KeyReg.on_release)
+    listener.start()
+    listener.join()
+    """
+    def on_press(self, key):
+        print(key)
+        
+    def on_release(self, key):
+        if key == keyboard.Key.esc:
+    # Stop listener
+            return False
 
-def on_release(key):
-    print('{0} released'.format(
-        key))
-    if key == keyboard.Key.esc:
-        # Stop listener
-        return False
+
+def main():
+    keyreg = KeyRegister()
+    listener = keyboard.Listener(
+        on_press=keyreg.on_press,
+        on_release=keyreg.on_release)
+    listener.start()
+    listener.join()
+    
+
+if __name__ == "__main__":
+    main()
 
 
-listener = keyboard.Listener(
-    on_press=on_press,
-    on_release=on_release)
-listener.start()
-listener.join()
+
