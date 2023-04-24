@@ -5,30 +5,42 @@ import collections
 
 
 class KeyRegister:
-    def __init__(self, default_key_list = None) -> None:
+    def __init__(self, on_press_fn=None, on_release_fn=None, default_key_list = None,) -> None:
+        
+        self.listener = keyboard.Listener(
+            on_press=on_press_fn,
+            on_release=on_release_fn)
+        self.listener.start()
         
         
         if default_key_list is not None:
             self.length = len(default_key_list)
-            self.saved_keys = default_key_list
+            self.registered_keys = default_key_list
         else:
             self.length = 4
-            self.saved_keys = []
+            self.registered_keys = []
             
         self.collected_input_buffer = collections.deque(maxlen=self.length) # Input detect
     
     def register_key(self , key : chr):
-        if len(self.saved_keys) < self.length:
-            self.saved_keys.append(key)
+        if len(self.registered_keys) < self.length:
+            self.registered_keys.append(key)
             return True
         else:
             return False
     
+    def check_new_input_key(self, key : chr) -> bool:
+        self.collected_input_buffer.append(key)
+        if(list(self.collected_input_buffer) == self.registered_keys):
+            return True
+        return False
+        
+    
     def get_registered_keys(self):
-        return self.saved_keys
+        return self.registered_keys
 
     def reset_registered_keys(self):
-        self.saved_keys.clear()
+        self.registered_keys.clear()
     
     """Functions from pynput, example usage:
     
@@ -39,13 +51,6 @@ class KeyRegister:
     listener.start()
     listener.join()
     """
-    def on_press(self, key):
-        print(key)
-        
-    def on_release(self, key):
-        if key == keyboard.Key.esc:
-    # Stop listener
-            return False
 
 
 def main():

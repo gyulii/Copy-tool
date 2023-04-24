@@ -8,8 +8,12 @@ class Writer:
         self.input_text = input_text
         self.start_delay = start_delay
         self.keypress_delay = keypress_delay
-        self._is_running_allowed = False
+        self.is_running_allowed = False
         self.keyboard_controller = pynput.keyboard.Controller()
+
+
+    def load_text(self, input_text: str):
+        self.input_text = input_text
 
     def run(self) -> None:
         time.sleep(self.start_delay)
@@ -24,3 +28,4 @@ class Writer:
 
     def disable_run(self) -> None:
         self.is_running_allowed = False
+
