@@ -16,9 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QProgressBar,
-    QPushButton, QSizePolicy, QSlider, QSpacerItem,
-    QStackedWidget, QTextEdit, QVBoxLayout, QWidget)
+    QLabel, QLineEdit, QMainWindow, QPushButton,
+    QSizePolicy, QSlider, QSpacerItem, QStackedWidget,
+    QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -91,6 +91,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.ButtonEnableCopy.sizePolicy().hasHeightForWidth())
         self.ButtonEnableCopy.setSizePolicy(sizePolicy1)
+        self.ButtonEnableCopy.setStyleSheet(u"background-color: red;")
         self.ButtonEnableCopy.setCheckable(False)
 
         self.verticalLayout_2.addWidget(self.ButtonEnableCopy)
@@ -126,22 +127,19 @@ class Ui_MainWindow(object):
         self.LineStartDelay = QLineEdit(self.widget)
         self.LineStartDelay.setObjectName(u"LineStartDelay")
 
-        self.gridLayout_4.addWidget(self.LineStartDelay, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.LineStartDelay, 0, 1, 1, 1, Qt.AlignHCenter|Qt.AlignVCenter)
 
         self.SliderStartDelay = QSlider(self.widget)
         self.SliderStartDelay.setObjectName(u"SliderStartDelay")
+        self.SliderStartDelay.setMaximum(10)
+        self.SliderStartDelay.setSingleStep(1)
+        self.SliderStartDelay.setPageStep(1)
         self.SliderStartDelay.setOrientation(Qt.Horizontal)
 
         self.gridLayout_4.addWidget(self.SliderStartDelay, 0, 2, 1, 1)
 
 
         self.verticalLayout_2.addWidget(self.widget)
-
-        self.progressBar = QProgressBar(self.widget_2)
-        self.progressBar.setObjectName(u"progressBar")
-        self.progressBar.setValue(24)
-
-        self.verticalLayout_2.addWidget(self.progressBar)
 
         self.widget_4 = QWidget(self.widget_2)
         self.widget_4.setObjectName(u"widget_4")
@@ -216,6 +214,7 @@ class Ui_MainWindow(object):
         self.LabelStartDelay.setText(QCoreApplication.translate("MainWindow", u"Start delay:", None))
         self.LabelInputKey.setText(QCoreApplication.translate("MainWindow", u"Current input key:", None))
         self.ButtonRecordNewKey.setText(QCoreApplication.translate("MainWindow", u"Record new input key", None))
+        self.LineStartDelay.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Content to be inserted:", None))
         self.ButtonManulaStart.setText(QCoreApplication.translate("MainWindow", u"Manual start", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))

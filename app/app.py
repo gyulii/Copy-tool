@@ -56,13 +56,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ButtonSecondPage.clicked.connect(self.select_second_page)
         self.ButtonExit.clicked.connect(self.close_app)
         self.ButtonEnableCopy.clicked.connect(self.enable_or_disable_writer)
+        
 
         # Writer mapping and creation
 
         self.threadpool = QThreadPool()
         print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
         self.controller_writing = Writer(input_text="Hi this is the default text")  # TODO: Copy from Clipboard
+        
+        
         self.ButtonManulaStart.clicked.connect(self.start_writing)
+        self.LineStartDelay.setText(f"{str(self.controller_writing.start_delay)} s")
+        self.LineStartDelay.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.SliderStartDelay.setValue(int(self.controller_writing.start_delay * 2))
+        self.SliderStartDelay.sliderReleased.connect(self.delay_slider_released)
+        
 
         # Start key detection thread
 
@@ -83,7 +91,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         
         if self.controller_key_monitoring.check_queue_to_keycombination(self.hotkey_start_writer) is True and self.ButtonRecordNewKey.isChecked() is False:
-            print("Do stuff")
+            print("Starting task")
+            self.start_writing()
+            self.controller_key_monitoring.reset_queue()
             
         # Convert keycode to redable format considering the enum type keys  
         if self.ButtonRecordNewKey.isChecked():
@@ -109,8 +119,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Star writing in seperate thread
 
     def start_writing(self):
-        worker = WritingThread(self.controller_writing, "Szia Orsi")  # TODO: Copy from clipboard or input field
-        self.threadpool.start(worker)
+        if self.controller_writing.is_running_allowed is True:
+            worker = WritingThread(self.controller_writing, "Szia Orsi")  # TODO: Copy from clipboard or input field
+            self.threadpool.start(worker)
 
     def enable_or_disable_writer(self):
         if self.controller_writing.is_running_allowed is False:
@@ -122,6 +133,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.ButtonEnableCopy.setText("Disabled")
             self.ButtonEnableCopy.setStyleSheet("QPushButton {background-color:red}")
 
+
+    def delay_slider_released(self):
+        self.controller_writing.start_delay = self.SliderStartDelay.value() / 2
+        self.LineStartDelay.setText(str(f"{self.controller_writing.start_delay} s"))
+        pass
+    
     # Page select
 
     def select_copy_page(self):

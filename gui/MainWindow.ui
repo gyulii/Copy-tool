@@ -113,6 +113,9 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: red;</string>
+                </property>
                 <property name="text">
                  <string>Disabled</string>
                 </property>
@@ -160,24 +163,30 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QLineEdit" name="LineStartDelay"/>
+                 <item row="0" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                  <widget class="QLineEdit" name="LineStartDelay">
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                  </widget>
                  </item>
                  <item row="0" column="2">
                   <widget class="QSlider" name="SliderStartDelay">
+                   <property name="maximum">
+                    <number>10</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>1</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>1</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="QProgressBar" name="progressBar">
-                <property name="value">
-                 <number>24</number>
-                </property>
                </widget>
               </item>
               <item>

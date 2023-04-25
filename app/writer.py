@@ -28,4 +28,3 @@ class Writer:
 
     def disable_run(self) -> None:
         self.is_running_allowed = False
-
