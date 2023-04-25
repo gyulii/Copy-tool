@@ -8,63 +8,34 @@ def empty_key_list():
 
 @pytest.fixture
 def not_empty_key_list():
-    return KeyRegister(default_key_list=['a', 'b', 'c' ,'d'])
+    pass
 
 
 def test_empty_list(empty_key_list):
     assert empty_key_list.length == 4
 
-def test_list_init(not_empty_key_list):
-    assert not_empty_key_list.get_registered_keys() == ['a', 'b', 'c' ,'d']
 
-
-def test_add_new_element(empty_key_list):
-    empty_key_list.register_key('Key.caps_lock')
-    assert empty_key_list.get_registered_keys() == ['Key.caps_lock']
-
-def test_overload_list(not_empty_key_list):
-    not_empty_key_list.register_key('Key.caps_lock')
-    assert not_empty_key_list.get_registered_keys() == ['a', 'b', 'c' ,'d']
+def test_4_long_list(empty_key_list):
+    keycomb_1 = ['a', 'a', 'a', 'a']
+    empty_key_list.add_new_input_key_to_queue('a')
+    assert empty_key_list.check_queue_to_keycombination(keycomb_1) == False
+    assert empty_key_list.get_queue() == ['a']
+    empty_key_list.add_new_input_key_to_queue('a')
+    empty_key_list.add_new_input_key_to_queue('a')
+    empty_key_list.add_new_input_key_to_queue('a')
+    assert empty_key_list.get_queue() == ['a', 'a', 'a', 'a']
+    assert empty_key_list.check_queue_to_keycombination(keycomb_1) == True
     
-def test_reset_list(not_empty_key_list):
-    not_empty_key_list.reset_registered_keys()
-    assert not_empty_key_list.get_registered_keys() == []
-    
-def test_if_input_keys_are_equal_to_registered_one_item(not_empty_key_list):
-    not_empty_key_list.check_new_input_key('a')
-    assert not_empty_key_list.check_new_input_key('a') == False
-    
-    
-def test_if_input_keys_are_equal_to_registered_full(not_empty_key_list):
-    not_empty_key_list.check_new_input_key('a')
-    not_empty_key_list.check_new_input_key('b')
-    not_empty_key_list.check_new_input_key('c')
-    assert not_empty_key_list.check_new_input_key('d') == True
-    
-def test_if_input_keys_are_equal_to_registered_full_overload(not_empty_key_list):
-    not_empty_key_list.check_new_input_key('a')
-    not_empty_key_list.check_new_input_key('b')
-    not_empty_key_list.check_new_input_key('c')
-    not_empty_key_list.check_new_input_key('d')
-    assert not_empty_key_list.check_new_input_key('d') == False
-    
-    
-def test_if_input_keys_are_equal_to_registered_full_two_rotation(not_empty_key_list):
-    not_empty_key_list.check_new_input_key('a')
-    not_empty_key_list.check_new_input_key('b')
-    not_empty_key_list.check_new_input_key('c')
-    assert not_empty_key_list.check_new_input_key('d') == True
-    assert not_empty_key_list.check_new_input_key('d') == False
-    not_empty_key_list.check_new_input_key('a')
-    not_empty_key_list.check_new_input_key('b')
-    assert not_empty_key_list.check_new_input_key('c') == False
-    assert not_empty_key_list.check_new_input_key('d') == True
-     
-    
-
-
-
-
+def test_3_long_list(empty_key_list):
+    keycomb_1 = ['a', 'a', 'a']
+    empty_key_list.add_new_input_key_to_queue('b')
+    empty_key_list.add_new_input_key_to_queue('a')
+    empty_key_list.add_new_input_key_to_queue('a')
+    empty_key_list.add_new_input_key_to_queue('a')
+    assert empty_key_list.get_queue() == ['b', 'a', 'a' ,'a']
+    assert empty_key_list.check_queue_to_keycombination(keycomb_1) == True
+    empty_key_list.add_new_input_key_to_queue('b')
+    assert empty_key_list.check_queue_to_keycombination(keycomb_1) == False
 
 @pytest.mark.skip(reason="no way of currently testing this")
 def test_default_list_with_capslock_set(empty_key_list):

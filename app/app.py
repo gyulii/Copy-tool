@@ -66,14 +66,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Start key detection thread
 
-        self.controller_key_monitoring = KeyRegister(on_press_fn=self.detect_on_press,
-                                                     on_release_fn=self.detect_on_release,
-                                                     default_key_list= [keyboard.Key.caps_lock,keyboard.Key.caps_lock,keyboard.Key.caps_lock,keyboard.Key.caps_lock,])  
-
+        self.controller_key_monitoring = KeyRegister(on_press_fn=self.detect_on_press, on_release_fn=self.detect_on_release)  
+        self.keycombination_start_writer =  [keyboard.Key.caps_lock,keyboard.Key.caps_lock]
     # KeyPress detection
 
     def detect_on_press(self, key):  # TODO Seperate thread to counteract freezing!
-        if self.controller_key_monitoring.check_new_input_key(key) == True:
+        self.controller_key_monitoring.add_new_input_key_to_queue(key)
+        if self.controller_key_monitoring.check_queue_to_keycombination(self.keycombination_start_writer) is True:
             print("Yay")
 
         pass

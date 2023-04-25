@@ -1,59 +1,41 @@
 """Identify pressed key and save them."""
-from pynput import keyboard
 import collections
 
+from pynput import keyboard
 
 
 class KeyRegister:
-    def __init__(self, on_press_fn=None, on_release_fn=None, default_key_list = None,) -> None:
+    def __init__(self, on_press_fn=None, on_release_fn=None) -> None:
         
         self.listener = keyboard.Listener(
             on_press=on_press_fn,
             on_release=on_release_fn)
         self.listener.start()
         
-        
-        if default_key_list is not None:
-            self.length = len(default_key_list)
-            self.registered_keys = default_key_list
-        else:
-            self.length = 4
-            self.registered_keys = []
-            
+        self.length = 4
+        self.registered_keys = []
         self.collected_input_buffer = collections.deque(maxlen=self.length) # Input detect
-    
-    def register_key(self , key : chr):
-        if len(self.registered_keys) < self.length:
-            self.registered_keys.append(key)
-            return True
-        else:
-            return False
-    
-    def check_new_input_key(self, key : chr) -> bool:
-        self.collected_input_buffer.append(key)
-        if(list(self.collected_input_buffer) == self.registered_keys):
-            return True
-        return False
-        
-    
-    def get_registered_keys(self):
-        return self.registered_keys
 
-    def reset_registered_keys(self):
-        self.registered_keys.clear()
+    def check_queue_to_keycombination(self, registered_key_combination: list) -> bool:
+        queue_list = list(self.collected_input_buffer)
+        if(len(registered_key_combination) < len(queue_list)):
+            # Cut the first n-th element (oldest items)
+            if(queue_list[ len(queue_list) - len(registered_key_combination):] == registered_key_combination):
+                return True
+            
+        elif(queue_list == registered_key_combination):
+                return True
+        return False
     
-    """Functions from pynput, example usage:
-    
-        KeyReg = KeyRegister()
-    listener = keyboard.Listener(
-        on_press=KeyReg.on_press,
-        on_release=KeyReg.on_release)
-    listener.start()
-    listener.join()
-    """
+    def add_new_input_key_to_queue(self , key : chr):
+        self.collected_input_buffer.append(key)
+        
+    def get_queue(self):
+        return list(self.collected_input_buffer)
 
 
 def main():
+ 
     keyreg = KeyRegister()
     listener = keyboard.Listener(
         on_press=keyreg.on_press,
