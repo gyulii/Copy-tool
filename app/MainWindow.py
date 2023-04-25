@@ -119,6 +119,7 @@ class Ui_MainWindow(object):
 
         self.ButtonRecordNewKey = QPushButton(self.widget)
         self.ButtonRecordNewKey.setObjectName(u"ButtonRecordNewKey")
+        self.ButtonRecordNewKey.setCheckable(True)
 
         self.gridLayout_4.addWidget(self.ButtonRecordNewKey, 2, 2, 1, 1)
 

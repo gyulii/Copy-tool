@@ -155,6 +155,9 @@
                    <property name="text">
                     <string>Record new input key</string>
                    </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item row="0" column="1">

@@ -67,18 +67,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Start key detection thread
 
         self.controller_key_monitoring = KeyRegister(on_press_fn=self.detect_on_press, on_release_fn=self.detect_on_release)  
-        self.keycombination_start_writer =  [keyboard.Key.caps_lock,keyboard.Key.caps_lock]
+        self.hotkey_start_writer =  [keyboard.Key.caps_lock,keyboard.Key.caps_lock,keyboard.Key.caps_lock,keyboard.Key.caps_lock]
+        
+        #Record new hotkey
+        
+        ky_str = [i.name for i in self.hotkey_start_writer] # Weird naming + 2 steps, otherwise WinDefender starts to cry
+        self.LineCurrentInputKey.setText(str(ky_str))
+    
+        self.ButtonRecordNewKey.toggled.connect(self.reset_hotkeys)
+    
     # KeyPress detection
 
     def detect_on_press(self, key):  # TODO Seperate thread to counteract freezing!
         self.controller_key_monitoring.add_new_input_key_to_queue(key)
-        if self.controller_key_monitoring.check_queue_to_keycombination(self.keycombination_start_writer) is True:
-            print("Yay")
 
-        pass
+        
+        if self.controller_key_monitoring.check_queue_to_keycombination(self.hotkey_start_writer) is True and self.ButtonRecordNewKey.isChecked() is False:
+            print("Do stuff")
+            
+        # Convert keycode to redable format considering the enum type keys  
+        if self.ButtonRecordNewKey.isChecked():
+            self.hotkey_start_writer.append(key)
+            ky_str = []
+            for key in self.hotkey_start_writer:
+                try:
+                    ky_str.append(key.name)
+                except AttributeError:
+                    ky_str.append(key)
+            self.LineCurrentInputKey.setText(str(ky_str))
+            self.controller_key_monitoring.reset_queue()
 
     def detect_on_release(self, key):  # TODO Seperate thread to counteract freezing!
         pass
+
+
+    def reset_hotkeys(self):
+        if self.ButtonRecordNewKey.isChecked():         # Only on down press
+            self.hotkey_start_writer = []
+            self.LineCurrentInputKey.setText("")
 
     # Star writing in seperate thread
 

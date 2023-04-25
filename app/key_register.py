@@ -12,17 +12,17 @@ class KeyRegister:
             on_release=on_release_fn)
         self.listener.start()
         
-        self.length = 4
-        self.registered_keys = []
-        self.collected_input_buffer = collections.deque(maxlen=self.length) # Input detect
+        self.collected_input_buffer = collections.deque() # Input detect
 
     def check_queue_to_keycombination(self, registered_key_combination: list) -> bool:
         queue_list = list(self.collected_input_buffer)
+        if(len(registered_key_combination) == 0):
+            return False
+        
         if(len(registered_key_combination) < len(queue_list)):
             # Cut the first n-th element (oldest items)
             if(queue_list[ len(queue_list) - len(registered_key_combination):] == registered_key_combination):
-                return True
-            
+                return True   
         elif(queue_list == registered_key_combination):
                 return True
         return False
@@ -33,6 +33,8 @@ class KeyRegister:
     def get_queue(self):
         return list(self.collected_input_buffer)
 
+    def reset_queue(self):
+        self.collected_input_buffer.clear()
 
 def main():
  
