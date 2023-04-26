@@ -117,7 +117,7 @@
                  <string notr="true">background-color: red;</string>
                 </property>
                 <property name="text">
-                 <string>Disabled</string>
+                 <string>Module Disabled</string>
                 </property>
                 <property name="checkable">
                  <bool>false</bool>
@@ -179,14 +179,27 @@
                     <number>1</number>
                    </property>
                    <property name="pageStep">
-                    <number>1</number>
+                    <number>2</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::NoTicks</enum>
+                   </property>
                   </widget>
                  </item>
                 </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="ButtonRunOnClick">
+                <property name="styleSheet">
+                 <string notr="true">background-color: green;</string>
+                </property>
+                <property name="text">
+                 <string>Run only after click: Enabled</string>
+                </property>
                </widget>
               </item>
               <item>

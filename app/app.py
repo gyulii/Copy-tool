@@ -3,6 +3,7 @@ import time
 
 from key_register import KeyRegister
 from MainWindow import Ui_MainWindow
+from mouse_handler import MouseHandler
 from pynput import keyboard
 from PySide6 import (
     QtCore,
@@ -13,6 +14,7 @@ from PySide6 import (
 # import PySide6 before matplotlib
 from PySide6.QtCore import (
     QAbstractListModel,
+    QMutex,
     QObject,
     QRunnable,
     Qt,
@@ -32,18 +34,23 @@ from PySide6.QtWidgets import (
 from writer import Writer
 
 
+class WritingThreadSignals(QObject):
+    signal_writing_done = Signal(bool)
+    
+MutexWritingController = QMutex()
+
 class WritingThread(QRunnable):
     def __init__(self, Writer: Writer, input_text: str) -> None:
         super().__init__()
 
         self.WritingController = Writer
         self.WritingController.load_text(input_text)
-        self.signal_writing_done = Signal(bool)
+        self.signals = WritingThreadSignals()
 
     @Slot()
     def run(self):
         self.WritingController.run()  # TODO: If disabled, prompt enable
-
+        self.signals.signal_writing_done.emit(True)
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -63,6 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.threadpool = QThreadPool()
         print("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
         self.controller_writing = Writer(input_text="Hi this is the default text")  # TODO: Copy from Clipboard
+        self.writing_thread_counter = 0
         
         
         self.ButtonManulaStart.clicked.connect(self.start_writing)
@@ -70,7 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.LineStartDelay.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.SliderStartDelay.setValue(int(self.controller_writing.start_delay * 2))
         self.SliderStartDelay.sliderReleased.connect(self.delay_slider_released)
-        
+        self.ButtonRunOnClick.clicked.connect(self.enable_or_disable_writer_execution_after_click)        
 
         # Start key detection thread
 
@@ -83,17 +91,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.LineCurrentInputKey.setText(str(ky_str))
     
         self.ButtonRecordNewKey.toggled.connect(self.reset_hotkeys)
+        
+        
+        # Mouse handling
+        
+        self.mouse_handler = MouseHandler(on_click_fn=self.detect_mouse_click)
     
     # KeyPress detection
 
     def detect_on_press(self, key):  # TODO Seperate thread to counteract freezing!
         self.controller_key_monitoring.add_new_input_key_to_queue(key)
-
+        
+        
+        if key == keyboard.Key.esc:
+            self.controller_writing.interrupt_execution()
         
         if self.controller_key_monitoring.check_queue_to_keycombination(self.hotkey_start_writer) is True and self.ButtonRecordNewKey.isChecked() is False:
             print("Starting task")
             self.start_writing()
-            self.controller_key_monitoring.reset_queue()
+            self.controller_key_monitoring.reset_queue() #Reset input sequence 
             
         # Convert keycode to redable format considering the enum type keys  
         if self.ButtonRecordNewKey.isChecked():
@@ -111,6 +127,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pass
 
 
+    def detect_mouse_click(self, x, y, button, pressed):
+        if pressed:
+            self.controller_writing.click_detected() 
+        elif(not pressed):
+            pass
+            
+
+
+
     def reset_hotkeys(self):
         if self.ButtonRecordNewKey.isChecked():         # Only on down press
             self.hotkey_start_writer = []
@@ -119,25 +144,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # Star writing in seperate thread
 
     def start_writing(self):
-        if self.controller_writing.is_running_allowed is True:
-            worker = WritingThread(self.controller_writing, "Szia Orsi")  # TODO: Copy from clipboard or input field
-            self.threadpool.start(worker)
+        if (self.controller_writing.is_running_allowed is True) and (self.writing_thread_counter < 1):
+                self.writing_thread_counter = self.writing_thread_counter + 1
+                print(self.writing_thread_counter)
+                worker = WritingThread(self.controller_writing, "Veeeeeeeeeeeeeeeeeeeeeerrryyyyyyyyyyy looooooooooooooooooooooooonnnnnnnnnnng teeeeeeeeeeeeeeeeeeeeeeeeext")  # TODO: Copy from clipboard or input field
+                worker.signals.signal_writing_done.connect(self.writing_is_done)
+                self.threadpool.start(worker)
+                
 
     def enable_or_disable_writer(self):
         if self.controller_writing.is_running_allowed is False:
             self.controller_writing.enable_run()
-            self.ButtonEnableCopy.setText("Enabled")
+            self.ButtonEnableCopy.setText("Module Enabled")
             self.ButtonEnableCopy.setStyleSheet("QPushButton {background-color:green}")
         else:
             self.controller_writing.disable_run()
-            self.ButtonEnableCopy.setText("Disabled")
+            self.ButtonEnableCopy.setText("Module Disabled")
             self.ButtonEnableCopy.setStyleSheet("QPushButton {background-color:red}")
 
 
+    def enable_or_disable_writer_execution_after_click(self):
+        if self.controller_writing.clicked_is_checked_on_run is False:
+            self.controller_writing.enable_click_detection()
+            self.ButtonRunOnClick.setText("Run only after click: Enabled")
+            self.ButtonRunOnClick.setStyleSheet("QPushButton {background-color:green}")
+        else:
+            self.controller_writing.disable_click_detection()
+            self.ButtonRunOnClick.setText("Run only after click: Disabled")
+            self.ButtonRunOnClick.setStyleSheet("QPushButton {background-color:red}")
+
     def delay_slider_released(self):
         self.controller_writing.start_delay = self.SliderStartDelay.value() / 2
+        if(self.controller_writing.start_delay == 0):
+            self.controller_writing.start_delay = 0.2
         self.LineStartDelay.setText(str(f"{self.controller_writing.start_delay} s"))
-        pass
+        
+    def writing_is_done(self):
+        self.writing_thread_counter = self.writing_thread_counter - 1
     
     # Page select
 

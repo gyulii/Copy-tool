@@ -133,13 +133,20 @@ class Ui_MainWindow(object):
         self.SliderStartDelay.setObjectName(u"SliderStartDelay")
         self.SliderStartDelay.setMaximum(10)
         self.SliderStartDelay.setSingleStep(1)
-        self.SliderStartDelay.setPageStep(1)
+        self.SliderStartDelay.setPageStep(2)
         self.SliderStartDelay.setOrientation(Qt.Horizontal)
+        self.SliderStartDelay.setTickPosition(QSlider.NoTicks)
 
         self.gridLayout_4.addWidget(self.SliderStartDelay, 0, 2, 1, 1)
 
 
         self.verticalLayout_2.addWidget(self.widget)
+
+        self.ButtonRunOnClick = QPushButton(self.widget_2)
+        self.ButtonRunOnClick.setObjectName(u"ButtonRunOnClick")
+        self.ButtonRunOnClick.setStyleSheet(u"background-color: green;")
+
+        self.verticalLayout_2.addWidget(self.ButtonRunOnClick)
 
         self.widget_4 = QWidget(self.widget_2)
         self.widget_4.setObjectName(u"widget_4")
@@ -210,11 +217,12 @@ class Ui_MainWindow(object):
         self.ButtonCopyPageSelect.setText(QCoreApplication.translate("MainWindow", u"Copy to VM", None))
         self.ButtonSecondPage.setText(QCoreApplication.translate("MainWindow", u"Coming soon", None))
         self.ButtonExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
-        self.ButtonEnableCopy.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.ButtonEnableCopy.setText(QCoreApplication.translate("MainWindow", u"Module Disabled", None))
         self.LabelStartDelay.setText(QCoreApplication.translate("MainWindow", u"Start delay:", None))
         self.LabelInputKey.setText(QCoreApplication.translate("MainWindow", u"Current input key:", None))
         self.ButtonRecordNewKey.setText(QCoreApplication.translate("MainWindow", u"Record new input key", None))
         self.LineStartDelay.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.ButtonRunOnClick.setText(QCoreApplication.translate("MainWindow", u"Run only after click: Enabled", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Content to be inserted:", None))
         self.ButtonManulaStart.setText(QCoreApplication.translate("MainWindow", u"Manual start", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
