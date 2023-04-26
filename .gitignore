@@ -13,3 +13,4 @@ thumbs.db
 .env
 .vscode
 .ruff_cache
+extensions/
