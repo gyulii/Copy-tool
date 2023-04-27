@@ -4,6 +4,9 @@ import pynput
 
 
 class Writer:
+    
+    mutex = False
+
     def __init__(self, input_text: str, start_delay: float = 2.5, keypress_delay: float = 0.01) -> None:
         self.input_text = input_text
         self.start_delay = start_delay
@@ -18,10 +21,11 @@ class Writer:
         self.input_text = input_text
 
     def run(self) -> None:
-        if self.is_running_allowed is False:
+        if self.is_running_allowed is False or self.is_mutex_locked():
             return
         self.interrupt = False  # If from previous interrupt it stayed true
-        
+        self.lock_mutex()
+
         time.sleep(self.start_delay)
         
         self.clicked = False
@@ -39,6 +43,8 @@ class Writer:
                 break
             time.sleep(self.keypress_delay)
             self.keyboard_controller.type(char)
+
+        self.unlock_mutex()
 
     def enable_run(self) -> None:
         self.is_running_allowed = True
@@ -60,3 +66,21 @@ class Writer:
         
     def click_detected(self):
         self.clicked = True
+
+    @classmethod
+    def lock_mutex(cls):
+        cls.mutex = True
+
+    @classmethod
+    def unlock_mutex(cls):
+        cls.mutex = False
+
+    @classmethod
+    def is_mutex_locked(cls):
+        if cls.mutex is True:
+            return True
+        else:
+            return False
+
+
+    

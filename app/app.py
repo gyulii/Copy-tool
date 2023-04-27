@@ -176,7 +176,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def delay_slider_released(self):
         self.controller_writing.start_delay = self.SliderStartDelay.value() / 2
         if(self.controller_writing.start_delay == 0):
-            self.controller_writing.start_delay = 0.2
+            self.controller_writing.start_delay = 0.3  # Safety reason, mutliple calls cannot be made this way
         self.LineStartDelay.setText(str(f"{self.controller_writing.start_delay} s"))
         
     def writing_is_done(self):

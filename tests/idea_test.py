@@ -44,6 +44,7 @@ def main():
     print(f"This is the original output: \n {output}")
 
     output = output.replace("—", "-")
+    output = output.replace("”", "\"")
 
     pyperclip.copy(output)
     with open(f"{os.path.abspath('.')}\\tests\\img\\solution.txt", "w", encoding="utf-8") as f:
