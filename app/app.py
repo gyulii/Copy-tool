@@ -41,6 +41,9 @@ from PySide6.QtWidgets import (
 )
 from writer import Writer
 
+GLOBAL_WINDOW_SIZE = False
+
+
 
 class WritingThreadSignals(QObject):
     signal_writing_done = Signal(bool)
@@ -57,7 +60,7 @@ class WritingThread(QRunnable):
 
     @Slot()
     def run(self):
-        self.WritingController.run()  # TODO: If disabled, prompt enable
+        self.WritingController.run()  # TODO: If disabled, prompt enable    
         self.signals.signal_writing_done.emit(True)
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -65,12 +68,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+
+        #Frameless window
+
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.topMiddle.mouseMoveEvent = self.moveWindow
+
         # Button mapping
 
         self.ButtonCopyPageSelect.clicked.connect(self.select_copy_page)
         self.ButtonSecondPage.clicked.connect(self.select_second_page)
         self.ButtonExit.clicked.connect(self.close_app)
         self.ButtonEnableCopy.clicked.connect(self.enable_or_disable_writer)
+
+                # MINIMIZE
+        self.ButtonMinimalize.clicked.connect(lambda: self.showMinimized())
+
+        # MAXIMIZE/RESTORE
+        self.ButtonChangeWindowSize.clicked.connect(self.toogle_size)
+
+        # CLOSE APPLICATION
+        self.ButtonExitTop.clicked.connect(self.close_app)
         
 
         # Writer mapping and creation
@@ -81,7 +100,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.writing_thread_counter = 0
         
         
-        self.ButtonManulaStart.clicked.connect(self.start_writing)
+        
         self.LineStartDelay.setText(f"{str(self.controller_writing.start_delay)} s")
         self.LineStartDelay.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.SliderStartDelay.setValue(int(self.controller_writing.start_delay * 2))
@@ -199,6 +218,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def select_second_page(self):
         self.stackedWidget.setCurrentIndex(1)
+
+    def toogle_size(self):
+        global GLOBAL_WINDOW_SIZE
+        size_status = GLOBAL_WINDOW_SIZE
+        if size_status is False:
+            self.showMaximized()
+        else:
+            self.showNormal()
+
+    def moveWindow(self, event):
+    # IF MAXIMIZED CHANGE TO NORMAL
+
+        # MOVE WINDOW
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
+    
+    def mousePressEvent(self, event):
+        # SET DRAG POS WINDOW
+        self.dragPos = event.globalPos()
+
+        # PRINT MOUSE EVENTS
+        if event.buttons() == Qt.LeftButton:
+            print('Mouse click: LEFT CLICK')
+        if event.buttons() == Qt.RightButton:
+            print('Mouse click: RIGHT CLICK')
+
 
     def close_app(self, *args, **kwargs):
         print("\nProgram closed, killing all threads!\n\n")

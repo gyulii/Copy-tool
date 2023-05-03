@@ -18,13 +18,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QMainWindow, QPushButton,
     QSizePolicy, QSlider, QSpacerItem, QStackedWidget,
-    QTextEdit, QVBoxLayout, QWidget)
+    QTabWidget, QVBoxLayout, QWidget)
+import resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(755, 596)
+        MainWindow.setTabShape(QTabWidget.Rounded)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"/*  White text */\n"
@@ -291,14 +293,107 @@ class Ui_MainWindow(object):
 "	background-color: rgb(35, 40, 49);\n"
 "	border: 2px solid rgb(43, 50, 61);\n"
 "}\n"
+"\n"
+"/* Top Buttons */\n"
+"#topPart .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
+"#topPart .QPushButton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
+"#topPart .QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }\n"
+"\n"
+"\n"
+"\n"
 "")
         self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.backgroundwidget = QWidget(self.centralwidget)
         self.backgroundwidget.setObjectName(u"backgroundwidget")
-        self.horizontalLayout_2 = QHBoxLayout(self.backgroundwidget)
+        self.verticalLayout_5 = QVBoxLayout(self.backgroundwidget)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.topPart = QWidget(self.backgroundwidget)
+        self.topPart.setObjectName(u"topPart")
+        self.topPart.setMinimumSize(QSize(0, 50))
+        self.topPart.setMaximumSize(QSize(16777215, 50))
+        self.horizontalLayout_2 = QHBoxLayout(self.topPart)
+        self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.sidepanel = QWidget(self.backgroundwidget)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.topLeft = QWidget(self.topPart)
+        self.topLeft.setObjectName(u"topLeft")
+        self.verticalLayout_6 = QVBoxLayout(self.topLeft)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.label_2 = QLabel(self.topLeft)
+        self.label_2.setObjectName(u"label_2")
+
+        self.verticalLayout_6.addWidget(self.label_2)
+
+
+        self.horizontalLayout_2.addWidget(self.topLeft)
+
+        self.topMiddle = QWidget(self.topPart)
+        self.topMiddle.setObjectName(u"topMiddle")
+        self.horizontalLayout_5 = QHBoxLayout(self.topMiddle)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer)
+
+        self.label = QLabel(self.topMiddle)
+        self.label.setObjectName(u"label")
+
+        self.horizontalLayout_5.addWidget(self.label)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
+
+
+        self.horizontalLayout_2.addWidget(self.topMiddle)
+
+        self.topRight = QWidget(self.topPart)
+        self.topRight.setObjectName(u"topRight")
+        self.horizontalLayout_4 = QHBoxLayout(self.topRight)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.ButtonMinimalize = QPushButton(self.topRight)
+        self.ButtonMinimalize.setObjectName(u"ButtonMinimalize")
+        self.ButtonMinimalize.setMinimumSize(QSize(25, 25))
+        self.ButtonMinimalize.setMaximumSize(QSize(25, 25))
+        icon = QIcon()
+        icon.addFile(u":/icons/resources/icons/icon_minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.ButtonMinimalize.setIcon(icon)
+        self.ButtonMinimalize.setCheckable(False)
+
+        self.horizontalLayout_4.addWidget(self.ButtonMinimalize)
+
+        self.ButtonChangeWindowSize = QPushButton(self.topRight)
+        self.ButtonChangeWindowSize.setObjectName(u"ButtonChangeWindowSize")
+        self.ButtonChangeWindowSize.setMinimumSize(QSize(25, 25))
+        self.ButtonChangeWindowSize.setMaximumSize(QSize(25, 25))
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/resources/icons/icon_restore.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.ButtonChangeWindowSize.setIcon(icon1)
+
+        self.horizontalLayout_4.addWidget(self.ButtonChangeWindowSize)
+
+        self.ButtonExitTop = QPushButton(self.topRight)
+        self.ButtonExitTop.setObjectName(u"ButtonExitTop")
+        self.ButtonExitTop.setMinimumSize(QSize(25, 25))
+        self.ButtonExitTop.setMaximumSize(QSize(25, 25))
+        icon2 = QIcon()
+        icon2.addFile(u":/icons/resources/icons/icon_close.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.ButtonExitTop.setIcon(icon2)
+
+        self.horizontalLayout_4.addWidget(self.ButtonExitTop)
+
+
+        self.horizontalLayout_2.addWidget(self.topRight)
+
+
+        self.verticalLayout_5.addWidget(self.topPart)
+
+        self.bottomPart = QWidget(self.backgroundwidget)
+        self.bottomPart.setObjectName(u"bottomPart")
+        self.horizontalLayout_3 = QHBoxLayout(self.bottomPart)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.sidepanel = QWidget(self.bottomPart)
         self.sidepanel.setObjectName(u"sidepanel")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -336,9 +431,9 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.ButtonExit, 4, 0, 1, 1)
 
 
-        self.horizontalLayout_2.addWidget(self.sidepanel)
+        self.horizontalLayout_3.addWidget(self.sidepanel)
 
-        self.mainpanel = QWidget(self.backgroundwidget)
+        self.mainpanel = QWidget(self.bottomPart)
         self.mainpanel.setObjectName(u"mainpanel")
         self.horizontalLayout = QHBoxLayout(self.mainpanel)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -421,21 +516,6 @@ class Ui_MainWindow(object):
         self.widget_4.setObjectName(u"widget_4")
         self.verticalLayout_3 = QVBoxLayout(self.widget_4)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.label_3 = QLabel(self.widget_4)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout_3.addWidget(self.label_3)
-
-        self.TextFieldClipboard = QTextEdit(self.widget_4)
-        self.TextFieldClipboard.setObjectName(u"TextFieldClipboard")
-
-        self.verticalLayout_3.addWidget(self.TextFieldClipboard)
-
-        self.ButtonManulaStart = QPushButton(self.widget_4)
-        self.ButtonManulaStart.setObjectName(u"ButtonManulaStart")
-
-        self.verticalLayout_3.addWidget(self.ButtonManulaStart)
-
 
         self.verticalLayout_2.addWidget(self.widget_4)
 
@@ -470,7 +550,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.stackedWidget)
 
 
-        self.horizontalLayout_2.addWidget(self.mainpanel)
+        self.horizontalLayout_3.addWidget(self.mainpanel)
+
+
+        self.verticalLayout_5.addWidget(self.bottomPart)
 
 
         self.verticalLayout_4.addWidget(self.backgroundwidget)
@@ -487,6 +570,11 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"LOGO", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"STATUS", None))
+        self.ButtonMinimalize.setText("")
+        self.ButtonChangeWindowSize.setText("")
+        self.ButtonExitTop.setText("")
         self.ButtonThirdPage.setText(QCoreApplication.translate("MainWindow", u"Coming soon", None))
         self.ButtonCopyPageSelect.setText(QCoreApplication.translate("MainWindow", u"Copy to VM", None))
         self.ButtonSecondPage.setText(QCoreApplication.translate("MainWindow", u"Coming soon", None))
@@ -497,8 +585,6 @@ class Ui_MainWindow(object):
         self.ButtonRecordNewKey.setText(QCoreApplication.translate("MainWindow", u"Record new input key", None))
         self.LineStartDelay.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.ButtonRunOnClick.setText(QCoreApplication.translate("MainWindow", u"Run only after click: Enabled", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Content to be inserted:", None))
-        self.ButtonManulaStart.setText(QCoreApplication.translate("MainWindow", u"Manual start", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
     # retranslateUi
 
