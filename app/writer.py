@@ -26,7 +26,7 @@ class Writer:
         self.interrupt = False  # If from previous interrupt it stayed true
         self.lock_mutex()
 
-        time.sleep(self.start_delay)
+        
         
         self.clicked = False
         
@@ -35,7 +35,7 @@ class Writer:
                 time.sleep(0)
             time.sleep(0.5)
             
-        
+        time.sleep(self.start_delay)
         
         
         for char in self.input_text:

@@ -1,6 +1,14 @@
 import sys
 import time
 
+import logging
+import pyperclip
+
+
+logging.basicConfig(format='%(levelname)s-%(asctime)s - %(message)s', datefmt='%H:%M:%S' , level=logging.DEBUG)
+
+
+
 from key_register import KeyRegister
 from MainWindow import Ui_MainWindow
 from mouse_handler import MouseHandler
@@ -101,6 +109,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def detect_on_press(self, key):  # TODO Seperate thread to counteract freezing!
         self.controller_key_monitoring.add_new_input_key_to_queue(key)
+        logging.debug(f"{key} pressed")
         
         
         if key == keyboard.Key.esc:
@@ -130,6 +139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def detect_mouse_click(self, x, y, button, pressed):
         if pressed:
             self.controller_writing.click_detected() 
+            logging.debug('Mouse clicked')
         elif(not pressed):
             pass
             
@@ -147,7 +157,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if (self.controller_writing.is_running_allowed is True) and (self.writing_thread_counter < 1):
                 self.writing_thread_counter = self.writing_thread_counter + 1
                 print(self.writing_thread_counter)
-                worker = WritingThread(self.controller_writing, "Veeeeeeeeeeeeeeeeeeeeeerrryyyyyyyyyyy looooooooooooooooooooooooonnnnnnnnnnng teeeeeeeeeeeeeeeeeeeeeeeeext")  # TODO: Copy from clipboard or input field
+                worker = WritingThread(self.controller_writing, pyperclip.paste())  
                 worker.signals.signal_writing_done.connect(self.writing_is_done)
                 self.threadpool.start(worker)
                 

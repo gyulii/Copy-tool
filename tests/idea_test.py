@@ -43,20 +43,21 @@ def main():
     image = cv2.imread(f"{os.path.abspath('.')}\\tests\\img\\img.png")
     gray_image = grayscale(image)
     
-    thresh, im_bw = cv2.threshold(gray_image, 160, 255, cv2.THRESH_BINARY)
+   
     #thick = thick_font(im_bw)
-    #image = cv2.resize(image, None, fx=2, fy=2)
-    cv2.imwrite(f"{os.path.abspath('.')}\\tests\\img\\mod.png", im_bw)
+    image = cv2.resize(image, None, fx=3, fy=3)
+    #thresh, im_bw = cv2.threshold(gray_image, 200, 255, cv2.THRESH_BINARY)
+    cv2.imwrite(f"{os.path.abspath('.')}\\tests\\img\\mod.png", image)
 
     config = "--oem 3 --psm 6"
-    txt = pytesseract.image_to_string(im_bw, config=config, lang="hun")
+    txt = pytesseract.image_to_string(image, config=config, lang="deu")
     # txt = pytesseract.image_to_string(im, config = config, lang='eng')
     output = txt
 
     print(f"This is the original output: \n {output}")
 
     output = output.replace("—", "-")
-    output = output.replace("”", "\"")
+    output = output.replace("\”", "\"")
 
     pyperclip.copy(output)
     with open(f"{os.path.abspath('.')}\\tests\\img\\solution.txt", "w", encoding="utf-8") as f:
@@ -67,5 +68,4 @@ if __name__ == "__main__":
     main()
     
     
-
 
