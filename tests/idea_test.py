@@ -15,6 +15,15 @@ def getText(filename):
     txt = pytesseract.image_to_string(img)
     return txt
 
+def grayscale(image):
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+def thick_font(image):
+    image = cv2.bitwise_not(image)
+    kernel = np.ones((2,2),np.uint8)
+    image = cv2.dilate(image, kernel, iterations=1)
+    image = cv2.bitwise_not(image)
+    return (image)
 
 # https://stackoverflow.com/questions/64099248/pytesseract-improve-ocr-accuracy
 
@@ -31,13 +40,16 @@ def main():
     if im:
         im.save(f"{os.path.abspath('.')}\\tests\\img\\img.png", "PNG")
 
-    image = cv2.imread(f"{os.path.abspath('.')}\\tests\\img\\img.png", 0)
-    thresh = cv2.threshold(image, 150, 255, cv2.THRESH_BINARY_INV)[1]
-    im = cv2.resize(image, None, fx=2, fy=2)
-    cv2.imwrite(f"{os.path.abspath('.')}\\tests\\img\\img.png", im)
+    image = cv2.imread(f"{os.path.abspath('.')}\\tests\\img\\img.png")
+    gray_image = grayscale(image)
+    
+    thresh, im_bw = cv2.threshold(gray_image, 160, 255, cv2.THRESH_BINARY)
+    #thick = thick_font(im_bw)
+    #image = cv2.resize(image, None, fx=2, fy=2)
+    cv2.imwrite(f"{os.path.abspath('.')}\\tests\\img\\mod.png", im_bw)
 
-    config = "--oem 3 --psm %d" % 6
-    txt = pytesseract.image_to_string(im, config=config, lang="deu")
+    config = "--oem 3 --psm 6"
+    txt = pytesseract.image_to_string(im_bw, config=config, lang="hun")
     # txt = pytesseract.image_to_string(im, config = config, lang='eng')
     output = txt
 
@@ -53,3 +65,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+
+
