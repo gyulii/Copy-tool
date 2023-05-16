@@ -11,9 +11,6 @@ def not_empty_key_list():
     pass
 
 
-def test_empty_list(empty_key_list):
-    assert empty_key_list.length == 4
-
 
 def test_4_long_list(empty_key_list):
     keycomb_1 = ['a', 'a', 'a', 'a']

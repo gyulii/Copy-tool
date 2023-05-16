@@ -29,7 +29,7 @@ from PySide6.QtCore import (
     QThreadPool,
     QTimer,
     Signal,
-    Slot,
+    Slot
 )
 from PySide6.QtWidgets import (
     QApplication,
@@ -38,6 +38,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QWidget,
+    QSizeGrip
 )
 from writer import Writer
 
@@ -73,18 +74,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.topMiddle.mouseMoveEvent = self.moveWindow
+        self.topMiddle.mouseMoveEvent = self.move_window
+        QSizeGrip(self.grip_bottom_right)
 
         # Button mapping
 
-        self.ButtonCopyPageSelect.clicked.connect(self.select_copy_page)
+        self.ButtonCopyPageSelect.clicked.connect(self.select_copy_page)                                                                                        
         self.ButtonSecondPage.clicked.connect(self.select_second_page)
         self.ButtonExit.clicked.connect(self.close_app)
         self.ButtonEnableCopy.clicked.connect(self.enable_or_disable_writer)
 
-                # MINIMIZE
+        # MINIMIZE
         self.ButtonMinimalize.clicked.connect(lambda: self.showMinimized())
-
+  
         # MAXIMIZE/RESTORE
         self.ButtonChangeWindowSize.clicked.connect(self.toogle_size)
 
@@ -223,28 +225,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         global GLOBAL_WINDOW_SIZE
         size_status = GLOBAL_WINDOW_SIZE
         if size_status is False:
+            GLOBAL_WINDOW_SIZE = True
             self.showMaximized()
         else:
+            GLOBAL_WINDOW_SIZE = False
             self.showNormal()
 
-    def moveWindow(self, event):
-    # IF MAXIMIZED CHANGE TO NORMAL
-
-        # MOVE WINDOW
+    def move_window(self, event):
         if event.buttons() == Qt.LeftButton:
-            self.move(self.pos() + event.globalPos() - self.dragPos)
-            self.dragPos = event.globalPos()
+            self.move(self.pos() + event.globalPosition().toPoint()  - self.dragPos)
+            self.dragPos = event.globalPosition().toPoint() 
             event.accept()
     
     def mousePressEvent(self, event):
-        # SET DRAG POS WINDOW
-        self.dragPos = event.globalPos()
-
-        # PRINT MOUSE EVENTS
+        self.dragPos = event.globalPosition().toPoint() 
         if event.buttons() == Qt.LeftButton:
-            print('Mouse click: LEFT CLICK')
+            logging.debug('Mouse click inside APP: LEFT CLICK')
         if event.buttons() == Qt.RightButton:
-            print('Mouse click: RIGHT CLICK')
+            logging.debug('Mouse click inside APP: RIGHT CLICK')
 
 
     def close_app(self, *args, **kwargs):
