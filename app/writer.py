@@ -4,7 +4,6 @@ import pynput
 
 
 class Writer:
-    
     mutex = False
 
     def __init__(self, input_text: str, start_delay: float = 2.5, keypress_delay: float = 0.01) -> None:
@@ -26,18 +25,19 @@ class Writer:
         self.interrupt = False  # If from previous interrupt it stayed true
         self.lock_mutex()
 
-        
-        
         self.clicked = False
-        
+
         if self.clicked_is_checked_on_run is True:
-            while(self.clicked is False):
-                time.sleep(0)
+            while self.clicked is False:
+                time.sleep(0) # Waiting for click
             time.sleep(0.5)
-            
+
+        # Fixes the bug when the task is started and it is waiting for click but the module is disabled in the meanwhile
+        if self.is_running_allowed is False: 
+            return
+        
         time.sleep(self.start_delay)
-        
-        
+
         for char in self.input_text:
             if self.interrupt is True:
                 break
@@ -54,16 +54,16 @@ class Writer:
 
     def interrupt_execution(self):
         self.interrupt = True
-        
+
     def reset_interrupt(self):
         self.interrupt = False
-    
+
     def enable_click_detection(self):
         self.clicked_is_checked_on_run = True
-    
+
     def disable_click_detection(self):
         self.clicked_is_checked_on_run = False
-        
+
     def click_detected(self):
         self.clicked = True
 
@@ -81,6 +81,3 @@ class Writer:
             return True
         else:
             return False
-
-
-    

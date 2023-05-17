@@ -1,1 +1,2 @@
-self.ButtonRecordNewKey.toggled.connect(self.reset_hotkeys)
+if __ name__ == "_ main__ ":
+| ilage_to_textlﬁ

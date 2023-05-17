@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(876, 608)
+        MainWindow.resize(930, 608)
         MainWindow.setTabShape(QTabWidget.Rounded)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
 "	border-radius: 0px;\n"
 "}\n"
 "QScrollBar::handle:horizontal {\n"
-"    background: rgb(189, 147, 249);\n"
+"    background: rgb(36, 172, 242);\n"
 "    min-width: 25px;\n"
 "	border-radius: 4px\n"
 "}\n"
@@ -140,7 +140,7 @@ class Ui_MainWindow(object):
 "	border-radius: 0px;\n"
 " }\n"
 "QScrollBar::handle:vertical {	\n"
-"	background: rgb(189, 147, 249);\n"
+"	background: rgb(36, 172, 242);\n"
 "    min-height: 25px;\n"
 "	border-radius: 4px\n"
 " }\n"
@@ -155,8 +155,8 @@ class Ui_MainWindow(object):
 " }\n"
 "QScrollBar::sub-line:vertical {\n"
 "	border: none;\n"
-"    background: rgb(55, 63, 77"
-                        ");\n"
+"    background: rgb(55, 63, 77)"
+                        ";\n"
 "     height: 20px;\n"
 "	border-top-left-radius: 4px;\n"
 "    border-top-right-radius: 4px;\n"
@@ -194,12 +194,12 @@ class Ui_MainWindow(object):
 "	margin: 0px;\n"
 "	background-color: rgb(52, 59, 72);\n"
 "}\n"
-"QSlider::groove:hor"
-                        "izontal:hover {\n"
+"QSlider::groove:hori"
+                        "zontal:hover {\n"
 "	background-color: rgb(55, 62, 76);\n"
 "}\n"
 "QSlider::handle:horizontal {\n"
-"    background-color: rgb(189, 147, 249);\n"
+"    background-color: rgb(36, 172, 242);\n"
 "    border: none;\n"
 "    height: 10px;\n"
 "    width: 10px;\n"
@@ -234,8 +234,8 @@ class Ui_MainWindow(object):
 "    background-color: rgb(195, 155, 255);\n"
 "}\n"
 "QSlider::handle:vertical:pressed {\n"
-"    background-color: rgb"
-                        "(255, 121, 198);\n"
+"    background-color: rgb(2"
+                        "55, 121, 198);\n"
 "}\n"
 "\n"
 "\n"
@@ -275,9 +275,9 @@ class Ui_MainWindow(object):
 "	border-radius: 5px;\n"
 "	border: 2px solid rgb(33, 37, 43);\n"
 "	padding-left: 10px;\n"
-"	selection-color: rgb(255, 255, 255);"
-                        "\n"
-"	selection-background-color: rgb(255, 121, 198);\n"
+"	selection-color: rgb(255, 255, 255);\n"
+""
+                        "	selection-background-color: rgb(255, 121, 198);\n"
 "}\n"
 "#QTextEdit:hover {\n"
 "	border: 2px solid rgb(64, 71, 88);\n"
@@ -369,7 +369,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7 = QVBoxLayout(self.main_body)
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(-1, -1, 0, 0)
+        self.verticalLayout_7.setContentsMargins(-1, 5, 0, 0)
         self.topPart = QWidget(self.main_body)
         self.topPart.setObjectName(u"topPart")
         self.topPart.setMinimumSize(QSize(0, 50))
@@ -377,7 +377,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QHBoxLayout(self.topPart)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(-1, 0, 0, 15)
+        self.horizontalLayout_2.setContentsMargins(-1, 0, 5, 15)
         self.topLeft = QWidget(self.topPart)
         self.topLeft.setObjectName(u"topLeft")
         self.verticalLayout_6 = QVBoxLayout(self.topLeft)
@@ -562,10 +562,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.label_4)
 
-        self.textEdit = QTextEdit(self.widget_4)
-        self.textEdit.setObjectName(u"textEdit")
+        self.textEdit_PageCopy_response = QTextEdit(self.widget_4)
+        self.textEdit_PageCopy_response.setObjectName(u"textEdit_PageCopy_response")
 
-        self.verticalLayout_3.addWidget(self.textEdit)
+        self.verticalLayout_3.addWidget(self.textEdit_PageCopy_response)
 
 
         self.verticalLayout_2.addWidget(self.widget_4)
@@ -582,26 +582,28 @@ class Ui_MainWindow(object):
         self.page_2_main_widget.setObjectName(u"page_2_main_widget")
         self.verticalLayout_5 = QVBoxLayout(self.page_2_main_widget)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(-1, -1, -1, 0)
         self.page_2_top_part = QWidget(self.page_2_main_widget)
         self.page_2_top_part.setObjectName(u"page_2_top_part")
         self.page_2_top_part.setAutoFillBackground(False)
         self.verticalLayout_9 = QVBoxLayout(self.page_2_top_part)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(-1, -1, -1, 0)
         self.widget_5 = QWidget(self.page_2_top_part)
         self.widget_5.setObjectName(u"widget_5")
         self.horizontalLayout_7 = QHBoxLayout(self.widget_5)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.pushButton = QPushButton(self.widget_5)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setStyleSheet(u"background-color: red;")
+        self.Button_OCR_AutoCopy = QPushButton(self.widget_5)
+        self.Button_OCR_AutoCopy.setObjectName(u"Button_OCR_AutoCopy")
+        self.Button_OCR_AutoCopy.setStyleSheet(u"background-color: green;")
 
-        self.horizontalLayout_7.addWidget(self.pushButton)
+        self.horizontalLayout_7.addWidget(self.Button_OCR_AutoCopy)
 
-        self.pushButton_2 = QPushButton(self.widget_5)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setStyleSheet(u"background-color: red;")
+        self.ButtonEnable_OCR = QPushButton(self.widget_5)
+        self.ButtonEnable_OCR.setObjectName(u"ButtonEnable_OCR")
+        self.ButtonEnable_OCR.setStyleSheet(u"background-color: green;")
 
-        self.horizontalLayout_7.addWidget(self.pushButton_2)
+        self.horizontalLayout_7.addWidget(self.ButtonEnable_OCR)
 
 
         self.verticalLayout_9.addWidget(self.widget_5)
@@ -633,45 +635,27 @@ class Ui_MainWindow(object):
         self.widget_6.setObjectName(u"widget_6")
         self.verticalLayout_11 = QVBoxLayout(self.widget_6)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_11.setContentsMargins(-1, -1, -1, 0)
         self.label_2 = QLabel(self.widget_6)
         self.label_2.setObjectName(u"label_2")
 
         self.verticalLayout_11.addWidget(self.label_2)
 
-        self.textEdit_2 = QTextEdit(self.widget_6)
-        self.textEdit_2.setObjectName(u"textEdit_2")
+        self.TextEdit_detected_OCR_text = QTextEdit(self.widget_6)
+        self.TextEdit_detected_OCR_text.setObjectName(u"TextEdit_detected_OCR_text")
 
-        self.verticalLayout_11.addWidget(self.textEdit_2)
+        self.verticalLayout_11.addWidget(self.TextEdit_detected_OCR_text)
+
+        self.Button_OCR_start = QPushButton(self.widget_6)
+        self.Button_OCR_start.setObjectName(u"Button_OCR_start")
+
+        self.verticalLayout_11.addWidget(self.Button_OCR_start)
 
 
         self.verticalLayout_9.addWidget(self.widget_6)
 
 
         self.verticalLayout_5.addWidget(self.page_2_top_part)
-
-        self.page_2_bottom_part = QWidget(self.page_2_main_widget)
-        self.page_2_bottom_part.setObjectName(u"page_2_bottom_part")
-        self.verticalLayout_8 = QVBoxLayout(self.page_2_bottom_part)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.pushButton_3 = QPushButton(self.page_2_bottom_part)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-
-        self.verticalLayout_8.addWidget(self.pushButton_3)
-
-        self.label_5 = QLabel(self.page_2_bottom_part)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setMaximumSize(QSize(16777215, 16))
-
-        self.verticalLayout_8.addWidget(self.label_5)
-
-        self.Label_Img_Display_OCR = QLabel(self.page_2_bottom_part)
-        self.Label_Img_Display_OCR.setObjectName(u"Label_Img_Display_OCR")
-        self.Label_Img_Display_OCR.setPixmap(QPixmap(u":/images/resources/images/black.png"))
-
-        self.verticalLayout_8.addWidget(self.Label_Img_Display_OCR)
-
-
-        self.verticalLayout_5.addWidget(self.page_2_bottom_part)
 
 
         self.verticalLayout.addWidget(self.page_2_main_widget)
@@ -756,14 +740,12 @@ class Ui_MainWindow(object):
         self.ButtonRunOnClick.setText(QCoreApplication.translate("MainWindow", u"Run only after click: Enabled", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Test area:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Response:", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Auto copy to clipboard disabled", None))
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Module Disabled", None))
+        self.Button_OCR_AutoCopy.setText(QCoreApplication.translate("MainWindow", u"Auto copy to clipboard enabled", None))
+        self.ButtonEnable_OCR.setText(QCoreApplication.translate("MainWindow", u"Module Enabled", None))
         self.ButtonRecordNewKey_OCR.setText(QCoreApplication.translate("MainWindow", u"Record new input key", None))
         self.LabelInputKey_OCR.setText(QCoreApplication.translate("MainWindow", u"Current input key:", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Detected text:", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Manual start", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Scanned image:", None))
-        self.Label_Img_Display_OCR.setText("")
+        self.Button_OCR_start.setText(QCoreApplication.translate("MainWindow", u"Manual start", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Version: 1.0", None))
     # retranslateUi
 
