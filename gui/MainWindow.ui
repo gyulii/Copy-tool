@@ -57,6 +57,10 @@ QToolTip {
 	border: 1px solid rgb(44, 49, 58);
 }
 
+#page_3 {	
+	background-color: rgb(40, 44, 52);
+	border: 1px solid rgb(44, 49, 58);
+}
 
 
 
@@ -291,7 +295,7 @@ QTextEdit {
 
 </string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout_9">
     <property name="spacing">
      <number>1</number>
     </property>
@@ -634,6 +638,47 @@ QTextEdit {
                      <property name="currentIndex">
                       <number>1</number>
                      </property>
+                     <widget class="QWidget" name="page_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>515</height>
+                       </size>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_4">
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_7">
+                         <property name="text">
+                          <string>Congratulations! It seems you have the ...</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_5">
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="pixmap">
+                          <pixmap resource="resources.qrc">:/images/resources/images/cu.jpg</pixmap>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_8">
+                         <property name="text">
+                          <string>inside of you to explore and discover new things. </string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignHCenter">
+                        <widget class="QLabel" name="label_9">
+                         <property name="text">
+                          <string>Sadly this page is under construction, come back at a later version to see new content and secrets ;)</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
                      <widget class="QWidget" name="PageCopy">
                       <layout class="QGridLayout" name="gridLayout_3">
                        <item row="0" column="0">

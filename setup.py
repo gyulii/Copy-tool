@@ -1,13 +1,16 @@
-from setuptools import find_packages, setup  
+from setuptools import find_packages, setup
 
 
-def parse_requirements(filename):  
+
+def parse_requirements(filename):
     lines = (line.strip() for line in open(filename))
     return [line for line in lines if line and not line.startswith("#")]
 
 
+
 setup(
     name="Copy tool",
+    version = "1.0",
     py_modules=["app"],
     description="",
     long_description=open("README.md", encoding="utf-8").read(),

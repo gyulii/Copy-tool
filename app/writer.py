@@ -29,13 +29,13 @@ class Writer:
 
         if self.clicked_is_checked_on_run is True:
             while self.clicked is False:
-                time.sleep(0) # Waiting for click
+                time.sleep(0)  # Waiting for click
             time.sleep(0.5)
 
         # Fixes the bug when the task is started and it is waiting for click but the module is disabled in the meanwhile
-        if self.is_running_allowed is False: 
+        if self.is_running_allowed is False:
             return
-        
+
         time.sleep(self.start_delay)
 
         for char in self.input_text:
