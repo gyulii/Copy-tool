@@ -118,7 +118,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Fill key list for auto typing
 
-        self.hotkey_start_writer_list_copy = [keyboard.Key.caps_lock, keyboard.Key.caps_lock, keyboard.Key.caps_lock, keyboard.Key.caps_lock]
+        self.hotkey_start_writer_list_copy = [keyboard.Key.caps_lock, keyboard.Key.caps_lock]
 
         ky_str = [
             i.name for i in self.hotkey_start_writer_list_copy
@@ -136,7 +136,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Button_OCR_AutoCopy.clicked.connect(self.toggle_OCR_module_auto_copy_to_clipboard)
 
         # Fill key list for OCR
-        self.hotkey_start_ocr_list = [keyboard.Key.num_lock, keyboard.Key.num_lock]
+        self.hotkey_start_ocr_list = [keyboard.Key.shift_l, keyboard.Key.ctrl_l]
 
         ky_str_for_OCR = [
             i.name for i in self.hotkey_start_ocr_list

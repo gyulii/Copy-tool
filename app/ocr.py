@@ -69,6 +69,10 @@ class OCR_engine_interface:
 
                 output_text = output_text.replace("—", "-")
                 output_text = output_text.replace("\”", '"')
+                output_text = output_text.replace("\n\n", 'OoO')
+                output_text = output_text.replace("\n", ' ')
+
+                output_text = output_text.replace('OoO', "\n\n")
                 print(output_text)
                 if self.auto_copy_to_clipboard is True:
                     pyperclip.copy(output_text)

@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "D:/Python/Copy_tool/app/app.py"
+   "value": "C:/Users/u28o53/Desktop/Python/Copy-tool/app/app.py"
   },
   {
    "optionDest": "onefile",
@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "D:/Python/Copy_tool/icon.ico"
+   "value": "C:/Users/u28o53/Desktop/Python/Copy-tool/icon.ico"
   },
   {
    "optionDest": "ascii",
@@ -70,16 +70,16 @@
    "value": false
   },
   {
-   "optionDest": "datas",
-   "value": "D:/Python/Copy_tool/extensions;extensions/"
-  },
-  {
    "optionDest": "pathex",
-   "value": "D:/Python/Copy_tool/app"
+   "value": "C:/Users/u28o53/Desktop/Python/Copy-tool/app"
   },
   {
    "optionDest": "datas",
-   "value": "D:/Python/Copy_tool/icon.ico;."
+   "value": "C:/Users/u28o53/Desktop/Python/Copy-tool/extensions;extensions/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/u28o53/Desktop/Python/Copy-tool/icon.ico;."
   }
  ],
  "nonPyinstallerOptions": {

@@ -6,7 +6,7 @@ import pynput
 class Writer:
     mutex = False
 
-    def __init__(self, input_text: str, start_delay: float = 2.5, keypress_delay: float = 0.01) -> None:
+    def __init__(self, input_text: str, start_delay: float = 0.3, keypress_delay: float = 0.01) -> None:
         self.input_text = input_text
         self.start_delay = start_delay
         self.keypress_delay = keypress_delay
