@@ -30,10 +30,11 @@ def thick_font(image):
 
 
 class OCR_engine_interface:
-    def __init__(self, input_language: str = "deu", auto_copy_to_clipboard: bool = True, engine_enabled: bool = True):
+    def __init__(self, input_language: str = "deu", auto_copy_to_clipboard: bool = True, engine_enabled: bool = True , append_new_line: bool = False):
         self.input_language = input_language
         self.auto_copy_to_clipboard = auto_copy_to_clipboard
         self.engine_enabled = engine_enabled
+        self.append_new_line = append_new_line
 
         self.tesseract_path = f"{os.path.abspath('.')}\\extensions\\tesseract\\tesseract.exe"
         os.environ["PATH"] = f"{os.path.abspath('.')}\\extensions\\tesseract\\tesseract.exe"
@@ -70,7 +71,9 @@ class OCR_engine_interface:
                 output_text = output_text.replace("—", "-")
                 output_text = output_text.replace("\”", '"')
                 output_text = output_text.replace("\n\n", 'OoO')
-                output_text = output_text.replace("\n", ' ')
+
+                if self.append_new_line is False:
+                    output_text = output_text.replace("\n", ' ')
 
                 output_text = output_text.replace('OoO', "\n\n")
                 print(output_text)

@@ -111,6 +111,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.SliderStartDelay.setValue(int(self.controller_writing.start_delay * 2))
         self.SliderStartDelay.sliderReleased.connect(self.delay_slider_released)
         self.ButtonRunOnClick.clicked.connect(self.enable_or_disable_writer_execution_after_click)
+        self.PushButton_NewLine.clicked.connect(self.enable_auto_add_newline)
 
         # Start key detection thread
 
@@ -136,7 +137,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Button_OCR_AutoCopy.clicked.connect(self.toggle_OCR_module_auto_copy_to_clipboard)
 
         # Fill key list for OCR
-        self.hotkey_start_ocr_list = [keyboard.Key.shift_l, keyboard.Key.ctrl_l]
+        self.hotkey_start_ocr_list = [ keyboard.Key.ctrl_l, keyboard.Key.shift_l]
 
         ky_str_for_OCR = [
             i.name for i in self.hotkey_start_ocr_list
@@ -156,8 +157,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def detect_on_press(self, key):  # TODO Seperate thread to counteract freezing!
         self.controller_key_monitoring.add_new_input_key_to_queue(key)
         logging.debug(f"{key} pressed")
-        self.textEdit_PageCopy_response.append(f"The following key was pressed: {key}")
-        self.textEdit_PageCopy_response.ensureCursorVisible()  # Scroll to last line
+        #self.textEdit_PageCopy_response.append(f"The following key was pressed: {key}")
+        #self.textEdit_PageCopy_response.ensureCursorVisible()  # Scroll to last line
 
         if key == keyboard.Key.esc:
             self.controller_writing.interrupt_execution()
@@ -172,7 +173,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.controller_writing.is_running_allowed is False:
                 self.textEdit_PageCopy_response.append(">>Typing process not started, if you wish to start it please enable the module!")
             else:
-                self.textEdit_PageCopy_response.append(">> Typing process started...")
+                #self.textEdit_PageCopy_response.append(">> Typing process started...")
+                pass
             self.textEdit_PageCopy_response.ensureCursorVisible()  # Scroll to last line
 
             self.start_writing()
@@ -184,9 +186,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ):
             print("Starting OCR task")
             result = self.OCR_handler.image_to_text()
-            self.TextEdit_detected_OCR_text.append(">>Output:\n")
-            self.TextEdit_detected_OCR_text.append(result)
-            self.TextEdit_detected_OCR_text.ensureCursorVisible()  # Scroll to last line
+            #self.TextEdit_detected_OCR_text.append(">>Output:\n")
+            #self.TextEdit_detected_OCR_text.append(result)
+            #self.TextEdit_detected_OCR_text.ensureCursorVisible()  # Scroll to last line
             self.controller_key_monitoring.reset_queue()
 
         # Auto typingrecord new button display, Convert keycode to readable format considering the enum type keys
@@ -227,12 +229,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def reset_hotkeys(self):
         if self.ButtonRecordNewKey.isChecked():  # Only on down press
             self.hotkey_start_writer_list_copy = []
+            self.ButtonRecordNewKey.setStyleSheet("QPushButton {background-color:Red}")
             self.LineCurrentInputKey.setText("")
+        if self.ButtonRecordNewKey.isChecked() is not True:  
+            self.ButtonRecordNewKey.setStyleSheet("QPushButton {background-color:none}")
+
 
     def reset_hotkeys_OCR(self):
         if self.ButtonRecordNewKey_OCR.isChecked():  # Only on down press
             self.hotkey_start_ocr_list = []
+            self.ButtonRecordNewKey_OCR.setStyleSheet("QPushButton {background-color:Red}")
             self.LineCurrentInputKey_OCR.setText("")
+        if self.ButtonRecordNewKey_OCR.isChecked() is not True: 
+            self.ButtonRecordNewKey_OCR.setStyleSheet("QPushButton {background-color:none}")    
 
     # OCR tasks
 
@@ -293,6 +302,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.controller_writing.disable_click_detection()
             self.ButtonRunOnClick.setText("Run only after click: Disabled")
             self.ButtonRunOnClick.setStyleSheet("QPushButton {background-color:red}")
+
+    def enable_auto_add_newline(self):
+        self.OCR_handler.append_new_line = True if self.OCR_handler.append_new_line == False else False # Toogle
+        if(self.OCR_handler.append_new_line is False): 
+            self.PushButton_NewLine.setStyleSheet("QPushButton {background-color:red}")
+        else:
+            self.PushButton_NewLine.setStyleSheet("QPushButton {background-color:green}")
 
     def delay_slider_released(self):
         self.controller_writing.start_delay = self.SliderStartDelay.value() / 2

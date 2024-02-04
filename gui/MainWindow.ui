@@ -636,7 +636,7 @@ QTextEdit {
                       <enum>QFrame::NoFrame</enum>
                      </property>
                      <property name="currentIndex">
-                      <number>1</number>
+                      <number>2</number>
                      </property>
                      <widget class="QWidget" name="page_3">
                       <property name="minimumSize">
@@ -884,6 +884,16 @@ QTextEdit {
                              <item>
                               <widget class="QWidget" name="widget_3" native="true">
                                <layout class="QGridLayout" name="gridLayout_5">
+                                <item row="1" column="1">
+                                 <widget class="QLineEdit" name="LineCurrentInputKey_OCR"/>
+                                </item>
+                                <item row="1" column="0">
+                                 <widget class="QLabel" name="LabelInputKey_OCR">
+                                  <property name="text">
+                                   <string>Current input key:</string>
+                                  </property>
+                                 </widget>
+                                </item>
                                 <item row="1" column="2">
                                  <widget class="QPushButton" name="ButtonRecordNewKey_OCR">
                                   <property name="text">
@@ -894,15 +904,15 @@ QTextEdit {
                                   </property>
                                  </widget>
                                 </item>
-                                <item row="1" column="0">
-                                 <widget class="QLabel" name="LabelInputKey_OCR">
+                                <item row="2" column="2">
+                                 <widget class="QPushButton" name="PushButton_NewLine">
+                                  <property name="styleSheet">
+                                   <string notr="true">background-color: red;</string>
+                                  </property>
                                   <property name="text">
-                                   <string>Current input key:</string>
+                                   <string>Auto add new line</string>
                                   </property>
                                  </widget>
-                                </item>
-                                <item row="1" column="1">
-                                 <widget class="QLineEdit" name="LineCurrentInputKey_OCR"/>
                                 </item>
                                </layout>
                               </widget>
@@ -983,7 +993,7 @@ QTextEdit {
                 <item>
                  <widget class="QLabel" name="label_6">
                   <property name="text">
-                   <string>Version: 1.0</string>
+                   <string>Version: 1.1</string>
                   </property>
                  </widget>
                 </item>
